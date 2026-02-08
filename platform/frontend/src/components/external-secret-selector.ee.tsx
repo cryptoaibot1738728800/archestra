@@ -265,7 +265,7 @@ export default function ExternalSecretSelector({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">-- Select a key --</SelectItem>
-                  {availableKeys.map((key) => (
+                  {availableKeys.map((key: string) => (
                     <SelectItem key={key} value={key}>
                       <div className="flex items-center gap-2">
                         <Key className="h-3 w-3" />

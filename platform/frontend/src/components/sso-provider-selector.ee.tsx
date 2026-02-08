@@ -75,7 +75,7 @@ export function SsoProviderSelector({
       )}
 
       <div className="space-y-2">
-        {ssoProviders.map((provider) => (
+        {ssoProviders.map((provider: (typeof ssoProviders)[number]) => (
           <Button
             key={provider.id}
             variant="outline"

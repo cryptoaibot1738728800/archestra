@@ -7,7 +7,7 @@
  * @see https://console.groq.com/docs/api-reference
  */
 import fastifyHttpProxy from "@fastify/http-proxy";
-import { RouteId } from "@shared";
+// RouteId will be generated after codegen
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import { z } from "zod";
 import config from "@/config";
@@ -97,7 +97,7 @@ const groqProxyRoutesV2: FastifyPluginAsyncZod = async (fastify) => {
     {
       bodyLimit: PROXY_BODY_LIMIT,
       schema: {
-        operationId: RouteId.GroqChatCompletionsWithDefaultAgent,
+        operationId: "groqChatCompletionsWithDefaultAgent",
         description:
           "Create a chat completion with Groq (uses default agent)",
         tags: ["llm-proxy"],
@@ -140,7 +140,7 @@ const groqProxyRoutesV2: FastifyPluginAsyncZod = async (fastify) => {
     {
       bodyLimit: PROXY_BODY_LIMIT,
       schema: {
-        operationId: RouteId.GroqChatCompletionsWithAgent,
+        operationId: "groqChatCompletionsWithAgent",
         description:
           "Create a chat completion with Groq for a specific agent",
         tags: ["llm-proxy"],

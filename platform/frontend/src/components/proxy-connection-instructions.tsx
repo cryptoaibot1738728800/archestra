@@ -64,6 +64,10 @@ const PROVIDER_CONFIG: Record<
     label: providerDisplayNames.bedrock,
     originalUrl: "https://bedrock-runtime.your-region.amazonaws.com/",
   },
+  groq: {
+    label: providerDisplayNames.groq,
+    originalUrl: "https://api.groq.com/openai/v1/",
+  },
   "claude-code": { label: "Claude Code", isCommand: true },
 };
 

@@ -271,7 +271,7 @@ export function SsoProvidersSettingsContent() {
   // Find existing providers by matching provider ID
   const getProviderStatus = useCallback(
     (config: SsoProviderConfig) => {
-      const provider = ssoProviders.find((p) => {
+      const provider = ssoProviders.find((p: (typeof ssoProviders)[number]) => {
         // For predefined providers, match exactly by canonical provider ID
         if (config.providerId) {
           return p.providerId === config.providerId;

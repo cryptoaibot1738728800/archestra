@@ -732,11 +732,12 @@ class GroqStreamAdapter
     this.state.responseId = chunk.id;
     this.state.model = chunk.model;
 
-    // Handle usage first
-    if (chunk.usage) {
+    // Handle usage first (cast to any because Groq SDK types may not include usage in chunks)
+    const chunkWithUsage = chunk as typeof chunk & { usage?: { prompt_tokens?: number; completion_tokens?: number } };
+    if (chunkWithUsage.usage) {
       this.state.usage = {
-        inputTokens: chunk.usage.prompt_tokens ?? 0,
-        outputTokens: chunk.usage.completion_tokens ?? 0,
+        inputTokens: chunkWithUsage.usage.prompt_tokens ?? 0,
+        outputTokens: chunkWithUsage.usage.completion_tokens ?? 0,
       };
     }
 

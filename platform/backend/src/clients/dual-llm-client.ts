@@ -50,11 +50,11 @@ export class OpenAiDualLlmClient implements DualLlmClient {
   private client: OpenAI;
   private model: string;
 
-  constructor(apiKey: string, model = "gpt-4o") {
+  constructor(apiKey: string, baseUrl?: string, model = "gpt-4o") {
     logger.debug({ model }, "[dualLlmClient] OpenAI: initializing client");
     this.client = new OpenAI({
       apiKey,
-      baseURL: config.llm.openai.baseUrl,
+      baseURL: baseUrl ?? config.llm.openai.baseUrl,
     });
     this.model = model;
   }
@@ -1204,13 +1204,18 @@ const dualLlmClientFactories: Record<SupportedProvider, DualLlmClientFactory> =
       if (!apiKey) throw new Error("API key required for Mistral dual LLM");
       return new MistralDualLlmClient(apiKey, model);
     },
+    groq: (apiKey) => {
+      if (!apiKey) throw new Error("API key required for Groq dual LLM");
+      // Groq uses OpenAI-compatible API
+      return new OpenAiDualLlmClient(apiKey, config.llm.groq.baseUrl);
+    },
     gemini: (apiKey) => {
       // Gemini supports Vertex AI mode where apiKey may be undefined
       return new GeminiDualLlmClient(apiKey);
     },
     openai: (apiKey) => {
       if (!apiKey) throw new Error("API key required for OpenAI dual LLM");
-      return new OpenAiDualLlmClient(apiKey);
+      return new OpenAiDualLlmClient(apiKey, undefined);
     },
     vllm: (apiKey, model) => {
       if (!model) throw new Error("Model name required for vLLM dual LLM");
